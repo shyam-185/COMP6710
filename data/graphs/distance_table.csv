@@ -1,0 +1,6 @@
+Distance Category,Original Predictions,Adjusted Predictions
+<=50 km,0,86
+<=500 km,11,1187
+<=1000 km,55,530
+<=5000 km,1422,541
+>=5000 km,1558,702
