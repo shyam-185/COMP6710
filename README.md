@@ -20,7 +20,7 @@ sudo apt update
 python -m venv geolocate
 source geolocate/bin/activate
 git clone https://github.com/shyam-185/COMP6710.git
-cd COMP6710
+cd Computer-Vision
 pip install -r requirement.txt
 ```
 The next thing to do is to install git lfs to use the regression_model.pkl file. Visit their site and download it for your machine. Once that is done, make sure it's in COMP6710 dir.
@@ -28,8 +28,23 @@ https://git-lfs.com/ - follow the instructions on their page to properly install
 ```bash
 git lfs install
 git lfs pull
-
+streamlit run ui.py
 ```
-## References
+The webpage should pop up. If you have connection issues, try opening Network URL rather than Local URL.
 
+## UI Webpage
+![Demo Image](data/UI/Screenshot 2024-11-23 220556.png)
+![Demo Image](data/UI/Screenshot 2024-11-23 220631.png)
+![Demo Image](data/UI/Screenshot 2024-11-23 220724.png)
+
+## Evalutaion
+![Distance Accuracy for Adjusted Model](data/graphs/distance_categories.png)
+![Distance Accuracy Line Graph](data/graphs/distance_line_plot.png)
+![Scatter Plot Actual vs. Original Prediction](data/graphs/scatter_actual_vs_original.png)
+![Scatter Plot Actual vs. Adjusted Prediction](data/graphs/scatter_actual_vs_adjusted.png)
+
+
+## References
+Final Report which goes over everything. Please give it a read!
+#TODO add link
  
