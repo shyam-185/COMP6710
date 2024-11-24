@@ -34,19 +34,19 @@ The webpage should pop up. If you have connection issues, try opening Network UR
 
 ## UI Webpage
 <p align="center">
-  <img src="data/UI/webpage1.png" alt="Demo Image 1" width="400">
-  <img src="data/UI/webpage2.png" alt="Demo Image 2" width="400">
+  <img src="data/UI/webpage1.png" alt="Demo Image 1" width="800">
+  <img src="data/UI/webpage2.png" alt="Demo Image 2" width="500">
   <img src="data/UI/webpage3.png" alt="Demo Image 3" width="400">
 </p>
 
 ## Evalutaion
 <p align="center">
-  <img src="data/graphs/distance_categories.png" alt="Distance Categories" width="400">
-  <img src="data/graphs/distance_line_plot.png" alt="Distance Line Graph" width="400">
+  <img src="data/graphs/distance_categories.png" alt="Distance Categories" width="500">
+  <img src="data/graphs/distance_line_plot.png" alt="Distance Line Graph" width="500">
 </p>
 <p align="center">
-  <img src="data/graphs/scatter_actual_vs_original.png" alt="Scatter Actual vs Original" width="400">
-  <img src="data/graphs/scatter_actual_vs_adjusted.png" alt="Scatter Actual vs Adjusted" width="400">
+  <img src="data/graphs/scatter_actual_vs_original.png" alt="Scatter Actual vs Original" width="500">
+  <img src="data/graphs/scatter_actual_vs_adjusted.png" alt="Scatter Actual vs Adjusted" width="500">
 </p>
 
 ## References
