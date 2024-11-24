@@ -33,16 +33,21 @@ streamlit run ui.py
 The webpage should pop up. If you have connection issues, try opening Network URL rather than Local URL.
 
 ## UI Webpage
-![Demo Image](data/UI/Screenshot 2024-11-23 220556.png)
-![Demo Image](data/UI/Screenshot 2024-11-23 220631.png)
-![Demo Image](data/UI/Screenshot 2024-11-23 220724.png)
+<p align="center">
+  <img src="data/UI/webpage1.png" alt="Demo Image 1" width="400">
+  <img src="data/UI/webpage2.png" alt="Demo Image 2" width="400">
+  <img src="data/UI/webpage3.png" alt="Demo Image 3" width="400">
+</p>
 
 ## Evalutaion
-![Distance Accuracy for Adjusted Model](data/graphs/distance_categories.png)
-![Distance Accuracy Line Graph](data/graphs/distance_line_plot.png)
-![Scatter Plot Actual vs. Original Prediction](data/graphs/scatter_actual_vs_original.png)
-![Scatter Plot Actual vs. Adjusted Prediction](data/graphs/scatter_actual_vs_adjusted.png)
-
+<p align="center">
+  <img src="data/graphs/distance_categories.png" alt="Distance Categories" width="400">
+  <img src="data/graphs/distance_line_plot.png" alt="Distance Line Graph" width="400">
+</p>
+<p align="center">
+  <img src="data/graphs/scatter_actual_vs_original.png" alt="Scatter Actual vs Original" width="400">
+  <img src="data/graphs/scatter_actual_vs_adjusted.png" alt="Scatter Actual vs Adjusted" width="400">
+</p>
 
 ## References
 Final Report which goes over everything. Please give it a read!
