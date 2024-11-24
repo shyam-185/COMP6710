@@ -29,13 +29,13 @@ with open("regression_model.pkl", "rb") as f:
     regression_model = pickle.load(f)
 
 def load_geojson_centroids(geojson_file):
-"""Load GeoJSON centroids.
+    """Load GeoJSON centroids.
 
-Params:
-------
-    geojson_file (string):
-        Path to geojson file that contains the centroid (representation coordinate) for country.
-"""
+    Params:
+    ------
+        geojson_file (string):
+            Path to geojson file that contains the centroid (representation coordinate) for country.
+    """
     with open(geojson_file, "r") as f:
         geojson_data = json.load(f)
     centroids = {}
@@ -52,13 +52,13 @@ Params:
 
 # Load GeoJSON boundaries
 def load_geojson_boundaries(geojson_file):
-"""Load GeoJSON country shape.
+    """Load GeoJSON country shape.
 
-Params:
-------
-    geojson_file (string):
-        Path to geojson file that contains the shape in coordinate representation for all countries in dataset.
-"""
+    Params:
+    ------
+        geojson_file (string):
+            Path to geojson file that contains the shape in coordinate representation for all countries in dataset.
+    """
     with open(geojson_file, "r") as f:
         geojson_data = json.load(f)
 
@@ -88,26 +88,26 @@ country_data = load_geojson_boundaries(geojson_file)
 ######################################## Predict ###############################################
 
 def adjust_to_boundary(lat, lon, predicted_country, input_features):
-"""This fuction uses the country's geoshape and centroid pulled from the geojson file to generate 
-a more accuracte prediction from the regression model.This function uses the predicted country's geoshape 
-to adjusted the prediction bounds of the regression model.
+    """This fuction uses the country's geoshape and centroid pulled from the geojson file to generate 
+    a more accuracte prediction from the regression model.This function uses the predicted country's geoshape 
+    to adjusted the prediction bounds of the regression model.
 
-Params:
--------
-    lat (float):
-        Latitude coordinate value of predicted country.
-    lon (float):
-        Longitude coordinate value of predicted country.
-    predicted_country (string):
-        The predicted country from the classification model (streetCLIP).
-    input_features (np.array):
-        The 4 extracted features that were taken in feature_extractor.py.
-        
-Returns:
---------
-    lat (float): The adjusted latitude coordinate, based off the country bounds and centroid of the country.
-    lon (float): The adjusted longitude coordinate, based off the country bounds and centroid of the country.
-"""
+    Params:
+    -------
+        lat (float):
+            Latitude coordinate value of predicted country.
+        lon (float):
+            Longitude coordinate value of predicted country.
+        predicted_country (string):
+            The predicted country from the classification model (streetCLIP).
+        input_features (np.array):
+            The 4 extracted features that were taken in feature_extractor.py.
+            
+    Returns:
+    --------
+        lat (float): The adjusted latitude coordinate, based off the country bounds and centroid of the country.
+        lon (float): The adjusted longitude coordinate, based off the country bounds and centroid of the country.
+    """
     if predicted_country in country_data:
         boundary = country_data[predicted_country]["boundary"]
         lat_range = country_data[predicted_country]["lat_range"]
@@ -121,16 +121,16 @@ Returns:
             print("Point is outside the boundary. Constraining regression model to country bounds...")
 
             def constrained_predict():
-            """This function limits the predicition range of the regression model from the whole globe, 
-            down to the predicted country's outer boundaries.
-            
-            Returns:
-            --------
-                constrained_lat (float): New latitude coordinate value that is within country geoshape boundary.
-                constrained_lon (float): New longitude coordinate value that is within country geoshape boundary.
-                midpoint_lat (float): Midpoint latitude coordinate of country's geoshape boundary.
-                midpoint_lon (float): Midpoint longitude coordinate of country's geoshape boundary.
-            """
+                """This function limits the predicition range of the regression model from the whole globe, 
+                down to the predicted country's outer boundaries.
+                
+                Returns:
+                --------
+                    constrained_lat (float): New latitude coordinate value that is within country geoshape boundary.
+                    constrained_lon (float): New longitude coordinate value that is within country geoshape boundary.
+                    midpoint_lat (float): Midpoint latitude coordinate of country's geoshape boundary.
+                    midpoint_lon (float): Midpoint longitude coordinate of country's geoshape boundary.
+                """
                 # Default to (0.0, 0.0)
                 centroid = centroids.get(predicted_country, (0.0, 0.0))
                 centroid_features = np.array(centroid).reshape(1, -1)
@@ -158,23 +158,23 @@ Returns:
 
 
 def predict_coordinates(image_path, predicted_country):
-"""This fuction is the raw prediction of the regression model, it is based mostly off the input image.
-It also accounts somewhat for the centroid and limited features (4) from the feature extractor.
+    """This fuction is the raw prediction of the regression model, it is based mostly off the input image.
+    It also accounts somewhat for the centroid and limited features (4) from the feature extractor.
 
-Params:
--------
-    image_path (string):
-        Relative or absoulte path to data file.
-    predicted_country (string):
-        The country that the regression model predicted with the most confidence.
-        
-Returns:
--------
-    predicted_lat (flaot): The predicted latitude coordinate of the image.
-    predicted_lon (float): The predicted longitude coordinate of the image.
-    reduced_features: Makes sure the feature set is reduced down to 4. This is here to avoid frustrating errors encountered.
+    Params:
+    -------
+        image_path (string):
+            Relative or absoulte path to data file.
+        predicted_country (string):
+            The country that the regression model predicted with the most confidence.
+            
+    Returns:
+    -------
+        predicted_lat (flaot): The predicted latitude coordinate of the image.
+        predicted_lon (float): The predicted longitude coordinate of the image.
+        reduced_features: Makes sure the feature set is reduced down to 4. This is here to avoid frustrating errors encountered.
 
-"""
+    """
     img = Image.open(image_path).convert("RGB")
     inputs = processor(images=img, return_tensors="pt", padding=True).to(device)
 
@@ -193,31 +193,3 @@ Returns:
     # Predict coordinates using the regression model
     predicted_lat, predicted_lon = regression_model.predict(combined_features)[0]
     return predicted_lat, predicted_lon, reduced_features
-
-######################################## Main ############################################
-
-image_path = "data/streetviews/UA/46.646150000000006,32.61066.jpg"
-
-# Classification: Predict the country
-img = Image.open(image_path).convert("RGB")
-country_scores = classify(img)
-predicted_country = max(country_scores, key=country_scores.get)
-confidence = country_scores[predicted_country] * 100
-
-print(f"The country where this image was taken is most probably:")
-print(f"{predicted_country}: {confidence:.2f}% Confidence")
-
-# Predict coordinates using regression
-predicted_lat, predicted_lon, input_features = predict_coordinates(image_path, predicted_country)
-
-adjusted_lat, adjusted_lon = adjust_to_boundary(
-    predicted_lat, predicted_lon, predicted_country, input_features
-)
-
-# Output
-print(f"Model Predicted Country: {predicted_country} (Confidence: {confidence:.2f}%)")
-print(f"Model Predicted Coordinates - Latitude: {predicted_lat}, Longitude: {predicted_lon}")
-if (predicted_lat, predicted_lon) != (adjusted_lat, adjusted_lon):
-    print(f"Model Adjusted Coordinates - Latitude: {adjusted_lat}, Longitude: {adjusted_lon}")
-else:
-    print("No adjustment needed.")

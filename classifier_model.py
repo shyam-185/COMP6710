@@ -41,17 +41,17 @@ labels = ['English Name', 'Northern Mariana Islands', 'Kuril Islands', 'France',
 
 # Classification function
 def classify(image):
-"""Classify the image to predict the most probable country. Uses pre-defind country labels and image path as parameters.
+    """Classify the image to predict the most probable country. Uses pre-defind country labels and image path as parameters.
 
-Params:
--------
-    image (str):
-        Data image path.
+    Params:
+    -------
+        image (str):
+            Data image path.
 
-Notes:
-------
-Uses streetCLIP model based on Open AI's CLIP ViT - https://huggingface.co/geolocal/StreetCLIP.
-"""
+    Notes:
+    ------
+    Uses streetCLIP model based on Open AI's CLIP ViT - https://huggingface.co/geolocal/StreetCLIP.
+    """
     inputs = processor(text=labels, images=image, return_tensors="pt", padding=True).to(device)
     with torch.no_grad():
         outputs = model(**inputs)

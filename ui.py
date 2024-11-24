@@ -80,4 +80,4 @@ if uploaded_file is not None:
         })
         folium.GeoJson(geojson_boundary, name="Country Boundary").add_to(map_overlay)
 
-    st_folium(m, width=700, height=500)
+    st_folium(map_overlay, width=700, height=500)

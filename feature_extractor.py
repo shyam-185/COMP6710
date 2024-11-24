@@ -19,39 +19,39 @@ model.to(device)
 processor = CLIPProcessor.from_pretrained("geolocal/StreetCLIP")
 
 def reduce_dimensions(features, n_components=4):
-"""Reduces the dimensionality of feature embeddings using PCA.
+    """Reduces the dimensionality of feature embeddings using PCA.
 
-This function is used to reduce the number of features from 768 to a smaller number 4 to make the data more manageable for regression.
-I did this because of the limited memory on my machine and save a lot of time.
+    This function is used to reduce the number of features from 768 to a smaller number 4 to make the data more manageable for regression.
+    I did this because of the limited memory on my machine and save a lot of time.
 
-Params:
--------
-    features (np.ndarray): 
-        Input feature embeddings of shape (n_samples, n_features), 
-    n_components (int, optional): 
-        The number of principal components to retain. Defaults to 4.
+    Params:
+    -------
+        features (np.ndarray): 
+            Input feature embeddings of shape (n_samples, n_features), 
+        n_components (int, optional): 
+            The number of principal components to retain. Defaults to 4.
 
-Return:
--------
-    np.ndarray: Reduced feature embeddings of shape (n_samples, n_components).
-"""
+    Return:
+    -------
+        np.ndarray: Reduced feature embeddings of shape (n_samples, n_components).
+    """
     pca = PCA(n_components=n_components)
     return pca.fit_transform(features)
 
 
 def preprocess_images(image_paths):
-"""Preprocessing function conforming to StreetCLIP which uses Open AI's CLIP ViT.
+    """Preprocessing function conforming to StreetCLIP which uses Open AI's CLIP ViT.
 
-Params:
-------
-    image_paths (list): 
-        List of image file paths.
-        
-Notes:
-------
-    Open AI's CLIP ViT uses 14x14 pixel patches and images with a 336 pixel side length.
-    https://huggingface.co/geolocal/StreetCLIP
-"""
+    Params:
+    ------
+        image_paths (list): 
+            List of image file paths.
+            
+    Notes:
+    ------
+        Open AI's CLIP ViT uses 14x14 pixel patches and images with a 336 pixel side length.
+        https://huggingface.co/geolocal/StreetCLIP
+    """
     processed_images = []
     for image in image_paths:
         img = Image.open(image).convert("RGB")
@@ -60,19 +60,19 @@ Notes:
     return processed_images
 
 def extract_features(image_paths, batch_size=16):
-"""Extracts features for provided list of image paths in batches.
+    """Extracts features for provided list of image paths in batches.
 
-Params:
------
-    image_paths (list): 
-        List of image file paths.
-    batch_size (int): 
-        Number of images to process in a single batch.
+    Params:
+    -----
+        image_paths (list): 
+            List of image file paths.
+        batch_size (int): 
+            Number of images to process in a single batch.
 
-Return:
---------
-    np.ndarray: Feature embeddings for all images.
-"""
+    Return:
+    --------
+        np.ndarray: Feature embeddings for all images.
+    """
     feature_embeddings = []
 
     for batch_start in range(0, len(image_paths), batch_size):

@@ -20,15 +20,15 @@ geojson_file = "data/world-administrative-boundaries.geojson"
 output_model_file = "regression_model.pkl"
 
 def load_geojson_centroids(geojson_file):
-"""Load GeoJSON to extract centroids. This is technically just the representation point of a country.
-This is needed in the calculation of the adjusted prediction, so we do not adjust to an edge of the country shape.
+    """Load GeoJSON to extract centroids. This is technically just the representation point of a country.
+    This is needed in the calculation of the adjusted prediction, so we do not adjust to an edge of the country shape.
 
-Params:
--------
-    geojson_file (string):
-        Geojson file that contains shapes and other data of countries.
+    Params:
+    -------
+        geojson_file (string):
+            Geojson file that contains shapes and other data of countries.
 
-"""
+    """
     with open(geojson_file, "r") as f:
         geojson_data = json.load(f)
     centroids = {}
@@ -46,13 +46,13 @@ Params:
 centroids = load_geojson_centroids(geojson_file)
 
 def correct_image_path(image_path):
-"""Helper Function to correct paths, when running into frustrating errors to do with structure.
+    """Helper Function to correct paths, when running into frustrating errors to do with structure.
 
-Params:
--------
-    image_path (sting): 
-        Relative or absoulte path to data file.
-"""
+    Params:
+    -------
+        image_path (sting): 
+            Relative or absoulte path to data file.
+    """
     if not os.path.isfile(image_path):
         base_dir = "data/streetviews/"
         corrected_path = os.path.join(base_dir, '/'.join(image_path.split('/')[-2:]))
