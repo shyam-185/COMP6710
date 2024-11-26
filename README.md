@@ -50,6 +50,5 @@ The webpage should pop up. If you have connection issues, try opening Network UR
 </p>
 
 ## References
-Final Report which goes over everything. Please give it a read!
-#TODO add link
+In the final report that goes over everything, references are attached, please read that.
  
